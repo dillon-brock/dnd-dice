@@ -9,8 +9,9 @@ import side6 from './assets/side_6.png';
 
 export default function DieContainer() {
 
-  const [side, setSide] = useState(5);
+  const [side, setSide] = useState(1);
   const [rolled, setRolled] = useState(false);
+  const [maxVal, setMaxVal] = useState(6);
 
   const images = {
     '1': side1,
@@ -23,11 +24,26 @@ export default function DieContainer() {
 
   const handleClick = () => {
     if (!rolled) setRolled(true);
-    setSide(Math.ceil(Math.random() * 6));
+    setSide(Math.ceil(Math.random() * maxVal));
+  }
+
+  const handleChange = (e) => {
+    setRolled(false);
+    setSide(1);
+    setMaxVal(e.target.value)
   }
 
   return (
     <div>
+      <label for='sides'>Number of sides</label>
+      <select name='sides' id='sides' onChange={handleChange} defaultValue={6}>
+        <option value={4}>4</option>
+        <option value={6}>6</option>
+        <option value={8}>8</option>
+        <option value={10}>10</option>
+        <option value={12}>12</option>
+        <option value={20}>20</option>
+      </select>
       <img src={images[side]} alt='side' />
       {rolled &&
       <div>
